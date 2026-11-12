@@ -1,0 +1,10 @@
+interface:
+  display_name: "宇苹果"
+  short_description: "廷宇的演示稿方法：有判断的叙事、克制的视觉，以及整套稳定的制作与交付"
+  icon_small: "./assets/skill-icon.svg"
+  icon_large: "./assets/skill-icon.svg"
+  brand_color: "#0071E3"
+  default_prompt: "用 $yu-apple 把这份材料做成一套有判断、有节奏、视觉一致的演示稿。"
+
+policy:
+  allow_implicit_invocation: true

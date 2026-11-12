@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>近邻工具图书馆 · 社区试点提案</title>
+<style>
+:root{--ink:#1d1d1f;--gray:#86868b;--blue:#0071e3;--mist:#f5f5f7;--scale:1}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden}body{display:flex;align-items:center;justify-content:center;padding-bottom:80px;background:#e9e9ee;color:var(--ink);font-family:"PingFang SC","Microsoft YaHei","Noto Sans CJK SC","Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased}h1,h2,h3,p{margin:0}h1,h2,h3{font-weight:600}svg{display:block}.viewport{position:relative;width:calc(1920px * var(--scale));height:calc(1080px * var(--scale))}.slide{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:hidden;transform-origin:top left;transform:scale(var(--scale));background:white;display:none}.slide.active{display:block}.dark{background:#050506;color:#f5f5f7}.mist{background:var(--mist)}.eyebrow{position:absolute;left:112px;top:76px;font-size:25px;line-height:1.5;color:var(--gray);letter-spacing:1px}.title{position:absolute;left:108px;right:108px;top:155px;font-size:78px;line-height:1.23;letter-spacing:-1.5px}.hero-title,.title,.quote{padding-bottom:20px}.accent{background:linear-gradient(95deg,#24a7ff 0%,#006cff 65%,#6260ff 100%);background-clip:text;-webkit-background-clip:text;color:transparent}.support{font-size:31px;line-height:1.65;color:#777780}.foot{position:absolute;left:112px;right:190px;bottom:52px;font-size:19px;line-height:1.5;color:#86868b}.page-number{position:absolute;right:108px;bottom:52px;color:#9b9b9f;font:21px "Helvetica Neue",Arial,sans-serif;letter-spacing:2px}.small-label{font-size:24px;line-height:1.5;color:var(--gray)}
+.hero-title{position:absolute;left:108px;top:309px;font-size:104px;line-height:1.25;letter-spacing:-3px;z-index:2}.hero-sub{position:absolute;left:112px;top:637px;font-size:35px;color:#71717a;line-height:1.6}.hero-art{position:absolute;left:1260px;top:292px;width:470px;height:470px}.hero-art .thin{stroke:#d9e6f6;stroke-width:3;fill:none}.hero-art .solid{fill:#0071e3}.hero-art text{font-family:"Helvetica Neue",Arial,sans-serif}.quote{position:absolute;left:112px;top:275px;font-size:100px;line-height:1.35;letter-spacing:-2px}.quote-note{position:absolute;left:119px;top:650px;font-size:33px;line-height:1.65;color:#93939d}.process{position:absolute;left:170px;right:170px;top:457px;height:380px}.process svg{position:absolute;left:0;top:0;width:1580px;height:150px}.steps{position:absolute;left:0;top:170px;width:100%;display:grid;grid-template-columns:repeat(3,1fr);gap:100px}.step h3{font-size:43px;line-height:1.4;margin-bottom:18px}.step p{font-size:29px;line-height:1.6;color:#797981}.step .small-label{margin-bottom:12px}.process .step:nth-child(2){text-align:center}.process .step:nth-child(3){text-align:right}.process-summary{position:absolute;left:170px;right:170px;top:929px;border-top:1px solid #d8d8de;padding-top:30px;text-align:center;font-size:29px;font-weight:500;line-height:1.45}.aside{position:absolute;left:1215px;top:189px;right:112px;font-size:30px;line-height:1.6;color:#86868b}.shared-box{position:absolute;left:88px;right:88px;top:405px;height:545px;background:white;border-radius:64px;padding:50px 58px;box-shadow:0 18px 38px #16162406}.scenes{display:grid;grid-template-columns:repeat(3,1fr);gap:80px}.scene{text-align:center}.scene svg{width:74px;height:74px;margin:0 auto 26px;color:#0071e3}.scene h3{font-size:43px;line-height:1.4}.scene p{font-size:29px;color:#777780;line-height:1.6;margin-top:17px}.shared-base{position:absolute;left:72px;right:72px;bottom:48px;padding-top:30px;border-top:1px solid #e3e3e8;display:grid;grid-template-columns:200px 1fr 1fr 1fr;gap:40px;align-items:start}.shared-base h3{font-size:28px;line-height:1.5;color:#81818b}.shared-base p{font-size:28px;line-height:1.5}.shared-base p span{display:block;font-size:24px;color:#86868b;margin-top:8px}.deck-nav{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:14px;padding:8px 12px;background:#fffffff0;border-radius:30px;box-shadow:0 4px 20px #0001;z-index:50;font-size:14px;white-space:nowrap}.deck-nav button{font:inherit;border:0;border-radius:22px;background:transparent;color:#555560;padding:11px 18px;cursor:pointer}.deck-nav button:hover{background:#eeeeF2}.deck-nav .counter{min-width:65px;text-align:center;color:#777780}.capture{padding:0}.capture [data-deck-ui]{display:none!important}
+@media print{@page{size:1920px 1080px;margin:0}html,body{display:block;width:1920px;height:auto;overflow:visible;background:white;padding:0}.viewport{width:1920px;height:auto}.slide{position:relative;display:block!important;transform:none;break-after:page}.slide:last-child{break-after:auto}[data-deck-ui]{display:none!important}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+
+.hero-main,.heading,.close-heading{padding-right:24px;padding-bottom:24px}.evidence-number{padding-right:30px;padding-bottom:24px}
+/* Project layouts; the template page contract and navigation are retained. */
+:root{--sub:#626268;--line:#dedee4}
+body{font-family:"PingFang SC","Noto Sans CJK SC","Noto Sans SC","Microsoft YaHei","Helvetica Neue",Arial,sans-serif}
+.kicker{position:absolute;top:74px;left:112px;font-size:24px;letter-spacing:2px;color:var(--sub)}
+.dark .kicker{color:#92929b}.deck-label{position:absolute;right:112px;top:78px;font-size:20px;color:#86868b}
+.heading{position:absolute;left:108px;top:155px;font-size:76px;line-height:1.25;letter-spacing:-2px;font-weight:600}
+.blue{color:var(--blue)}.dark .blue{color:#53a8ff}.note{font-size:20px;line-height:1.55;color:var(--sub)}
+.dark .note{color:#9c9ca5}.body-copy{font-size:30px;line-height:1.65;color:var(--sub)}
+.footer{position:absolute;bottom:56px;left:112px;right:200px;font-size:18px;line-height:1.5;color:#72727a}
+.dark .footer{color:#92929b}.hero-main{position:absolute;left:108px;top:278px;font-size:102px;line-height:1.24;letter-spacing:-3px}
+.hero-desc{position:absolute;left:112px;top:588px;font-size:33px;line-height:1.65;color:#a9a9b2}
+.hero-tag{position:absolute;left:112px;top:797px;font-size:25px;border:1px solid #35353e;border-radius:32px;padding:16px 27px;color:#c2c2ca}
+.drill-art{position:absolute;left:1155px;top:286px;width:650px;height:500px}
+.art-label{position:absolute;left:1185px;top:830px;font-size:23px;color:#85858f}
+.evidence-number{position:absolute;left:112px;top:342px;font:600 250px/1 "Helvetica Neue",Arial,sans-serif;letter-spacing:-12px;color:var(--blue)}
+.evidence-number small{font-size:74px;letter-spacing:-4px;color:#a4a4ac}
+.evidence-copy{position:absolute;left:120px;top:635px;font-size:35px;line-height:1.5}
+.evidence-context{position:absolute;left:120px;top:772px;width:665px;font-size:27px;line-height:1.65;color:var(--sub)}
+.resident-panel{position:absolute;left:950px;top:320px;width:850px;height:550px;border-radius:56px;background:var(--mist);padding:55px}
+.resident-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:30px 34px}
+.resident{height:102px;position:relative;color:#d7d7de}.resident.on{color:var(--blue)}
+.resident:before{content:"";position:absolute;left:22px;top:0;width:42px;height:42px;border-radius:50%;background:currentColor}
+.resident:after{content:"";position:absolute;left:5px;top:51px;width:76px;height:49px;border-radius:38px 38px 16px 16px;background:currentColor}
+.legend{display:flex;align-items:center;gap:14px;font-size:24px;color:var(--sub);margin-top:40px}.legend i{display:block;width:13px;height:13px;border-radius:50%;background:var(--blue)}
+.evidence-boundary{position:absolute;left:1005px;top:744px;font-size:27px;color:var(--sub);line-height:1.65;width:700px}
+.service-title{width:770px}.service-copy{position:absolute;left:112px;top:405px;width:670px}
+.service-copy .lead{font-size:34px;line-height:1.6;color:var(--ink);margin-bottom:30px}
+.service-copy p+p{margin-top:28px}.service-boundary{position:absolute;left:112px;top:805px;width:700px;padding-top:25px;border-top:1px solid var(--line);font-size:24px;line-height:1.6;color:var(--sub)}
+.station-art{position:absolute;left:905px;top:232px;width:905px;height:650px}
+.station-label{position:absolute;top:910px;left:980px;font-size:20px;color:var(--sub)}
+.flow-sub{position:absolute;left:112px;top:278px;font-size:30px;line-height:1.6;color:var(--sub)}
+.flow-wrap{position:absolute;left:112px;right:112px;top:414px}.flow-line{position:absolute;top:38px;left:43px;right:255px;height:3px;background:#dcecff}
+.flow-line:after{content:"";position:absolute;right:-9px;top:-7px;width:14px;height:14px;border-right:3px solid #c3dcfa;border-top:3px solid #c3dcfa;transform:rotate(45deg)}
+.flow-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:42px;position:relative}.flow-step .num{display:flex;width:80px;height:80px;align-items:center;justify-content:center;background:#0071e3;color:white;border-radius:50%;font:500 29px Arial}
+.flow-step h2{font-size:35px;margin-top:41px;margin-bottom:17px;line-height:1.4}.flow-step p{font-size:26px;color:var(--sub);line-height:1.65}
+.flow-base{position:absolute;left:112px;right:112px;top:825px;background:var(--mist);border-radius:28px;padding:27px 34px;display:flex;gap:38px;align-items:center}
+.flow-base strong{font-size:27px;font-weight:500;white-space:nowrap}.flow-base p{font-size:25px;color:var(--sub);line-height:1.6}
+.pilot-counts{position:absolute;left:112px;top:299px;display:flex;gap:76px;align-items:baseline}.pilot-counts .metric{display:flex;align-items:baseline;gap:16px}.pilot-counts b{font:500 104px/1.1 "Helvetica Neue",Arial;color:var(--blue);letter-spacing:-4px}.pilot-counts span{font-size:30px;color:var(--sub)}
+.roles{position:absolute;left:112px;right:112px;top:470px;height:363px;background:white;border-radius:50px;display:grid;grid-template-columns:1fr 1fr;padding:43px 54px;gap:70px}
+.role{position:relative}.role+.role{border-left:1px solid var(--line);padding-left:70px}.role h2{font-size:36px;margin-bottom:26px}.role p{font-size:29px;line-height:1.7;color:var(--sub)}.role .role-intro{position:absolute;right:0;top:9px;font-size:22px;color:var(--gray)}
+.prestart{position:absolute;left:116px;top:878px;font-size:25px;line-height:1.7;color:var(--sub)}.prestart strong{color:var(--ink);font-weight:500}
+.close-heading{position:absolute;left:108px;top:263px;font-size:99px;line-height:1.25;letter-spacing:-3px}.close-desc{position:absolute;left:112px;top:558px;width:725px;font-size:31px;line-height:1.7;color:#a4a4af}
+.questions{position:absolute;left:1045px;top:243px;width:755px}.question{padding:31px 0 35px;border-bottom:1px solid #303038}.question .qhead{font-size:35px;line-height:1.4}.question p{font-size:25px;line-height:1.6;color:#9999a4;margin-top:13px}.question .qnum{font:25px Arial;color:#53a8ff;display:inline-block;width:61px}
+.next-step{position:absolute;left:112px;top:804px;right:112px;border-top:1px solid #303038;padding-top:28px;font-size:27px;line-height:1.65;color:#d0d0d8}.next-step span{color:#53a8ff;margin-right:30px}
+
+</style>
+</head>
+<body>
+<!-- Editable starting points, not a fixed slide sequence. Duplicate or replace sections as the argument requires.
+     Keep .viewport > .slide[data-page], unique data-page values, and the yuDeck API for the export tools. -->
+<main class="viewport">
+<section class="slide dark" data-page="01" aria-label="近邻工具图书馆提案">
+<p class="kicker">近邻 · 工具图书馆</p><p class="deck-label">社区试点提案</p>
+<h1 class="hero-main">偶尔要用的工具，<br><span class="blue">楼下就能借。</span></h1>
+<p class="hero-desc">让低频工具有个共同的家。<br>居民按需借用，近邻负责检查与维护。</p>
+<p class="hero-tag">拟议试点 · 一个社区，从小规模开始</p>
+<svg class="drill-art" viewBox="0 0 650 500" role="img" aria-label="电钻与工具收纳箱的矢量示意">
+<ellipse cx="336" cy="445" rx="282" ry="19" fill="#15151c"/>
+<path d="M79 251h485v172H79z" fill="#23232c"/><path d="M67 244h510v47H67z" fill="#3a3a46"/>
+<path d="M257 244v-35q0-17 17-17h94q17 0 17 17v35" fill="none" stroke="#545462" stroke-width="17"/>
+<rect x="286" y="278" width="69" height="46" rx="10" fill="#686877"/><path d="M311 293h20" stroke="#b8b8c5" stroke-width="5" stroke-linecap="round"/>
+<path d="M198 64h229q29 0 29 29v57q0 29-29 29H198q-29 0-29-29V93q0-29 29-29Z" fill="#0071e3"/>
+<path d="M183 72h63v100h-63q-14 0-14-22V94q0-22 14-22Z" fill="#3593f4"/>
+<path d="M420 87h67v70h-67z" fill="#72727e"/><path d="M487 104h91v36h-91z" fill="#b5b5c0"/><path d="M578 111h54v22h-54z" fill="#e7e7ef"/>
+<path d="M258 177h85l-28 109h-77z" fill="#0071e3"/><path d="M267 185h60l-17 72h-60z" fill="#31313d"/>
+<rect x="222" y="277" width="118" height="43" rx="9" fill="#181820"/><path d="M352 183v34h-22" fill="none" stroke="#a9a9b5" stroke-width="13" stroke-linecap="round"/>
+<path d="M274 99h106M274 120h80" stroke="#4ca7ff" stroke-width="7" stroke-linecap="round"/>
+<path d="M108 349h75M108 372h45" stroke="#555562" stroke-width="7" stroke-linecap="round"/>
+</svg><p class="art-label">工具示意 · 具体品类待试点确认</p>
+<p class="footer">虚构练习提案 · 服务尚未启动</p><div class="page-number">01</div>
+</section>
+<section class="slide" data-page="02" aria-label="小样本居民访谈">
+<p class="kicker">从居民的日常出发</p><h1 class="heading">用得少，<span class="blue">放得久。</span></h1>
+<p class="evidence-number">8<small> / 12</small></p>
+<p class="evidence-copy">位受访居民提到：<br>低频工具占地方。</p>
+<p class="evidence-context">工具可能一年只用一两次，<br>临时需要时，却未必找得到。</p>
+<div class="resident-panel"><div class="resident-grid"><div class="resident on" aria-hidden="true"></div><div class="resident on" aria-hidden="true"></div><div class="resident on" aria-hidden="true"></div><div class="resident on" aria-hidden="true"></div><div class="resident on" aria-hidden="true"></div><div class="resident on" aria-hidden="true"></div><div class="resident on" aria-hidden="true"></div><div class="resident on" aria-hidden="true"></div><div class="resident" aria-hidden="true"></div><div class="resident" aria-hidden="true"></div><div class="resident" aria-hidden="true"></div><div class="resident" aria-hidden="true"></div></div><p class="legend"><i></i>提到低频工具占地方的受访者</p></div>
+<p class="evidence-boundary">这是需求线索。<br>居民是否愿意持续借用，还要靠试点验证。</p>
+<p class="footer">来源：练习材料中的 12 位居民访谈设定；小样本探索，不代表市场规模或社区整体比例。</p><div class="page-number">02</div>
+</section>
+<section class="slide mist" data-page="03" aria-label="拟议工具借还服务">
+<p class="kicker">拟议服务</p><h1 class="heading service-title">借得放心，<br>比借得到更重要。</h1>
+<div class="service-copy"><p class="lead">在社区设一处固定借还点。<br>让工具在哪、怎么用、谁维护，<br>都有清楚的答案。</p><p class="body-copy">近邻提供操作说明，<br>负责检查、清洁与维护。</p><p class="body-copy">需要教学的工具，可预约学习。</p></div>
+<p class="service-boundary">服务范围：家用工具借用。<br>涉及持证操作的工作，不在本次服务范围内。</p>
+<svg class="station-art" viewBox="0 0 905 650" role="img" aria-label="固定工具借还点矢量示意，包括电钻、清洗机、折叠梯和基础维修工具">
+<rect x="78" y="42" width="752" height="516" rx="40" fill="#fff"/>
+<path d="M138 175h632M138 397h632" stroke="#e4e4eb" stroke-width="3"/>
+<rect x="126" y="88" width="275" height="47" rx="23" fill="#e8f2ff"/><text x="153" y="120" font-size="24" fill="#0071e3" font-family="PingFang SC,sans-serif">近邻 · 工具借还点</text>
+<path d="M571 219h85l-35 314h-86z" fill="none" stroke="#a5a5b1" stroke-width="14" stroke-linejoin="round"/><path d="M656 219l70 314M548 294h97M541 358h96M534 423h97M529 488h92" fill="none" stroke="#a5a5b1" stroke-width="12" stroke-linejoin="round"/>
+<path d="M176 242h120q13 0 13 13v47q0 13-13 13h-37l-20 61h-45l16-61h-34q-13 0-13-13v-47q0-13 13-13Z" fill="#0071e3"/><path d="M309 262h41v30h-41z" fill="#9b9ba7"/><path d="M350 270h41v14h-41z" fill="#636370"/>
+<rect x="375" y="270" width="98" height="109" rx="20" fill="#e4e4ec"/><path d="M391 270v-24h66v24M472 288q43-44 23-74" fill="none" stroke="#8f8f9c" stroke-width="9" stroke-linejoin="round"/><circle cx="391" cy="382" r="15" fill="#595965"/><circle cx="457" cy="382" r="15" fill="#595965"/><path d="M402 313h44M402 334h44" stroke="#a6a6b2" stroke-width="5"/>
+<path d="m191 438 42 42M213 438l-42 42" stroke="#9d9daa" stroke-width="13" stroke-linecap="round"/><path d="M301 443v53" stroke="#0071e3" stroke-width="13" stroke-linecap="round"/><path d="M282 438h39" stroke="#636370" stroke-width="17" stroke-linecap="round"/>
+<path d="M136 561h640v31H136z" fill="#d6d6e0"/><path d="M161 592v28M751 592v28" stroke="#b8b8c4" stroke-width="12"/>
+<circle cx="763" cy="112" r="13" fill="#0071e3"/>
+</svg><p class="station-label">原创矢量示意 · 空间和设备以试点确认为准</p>
+<p class="footer">可借品类设想：电钻、清洗机、折叠梯与基础维修工具。</p><div class="page-number">03</div>
+</section>
+<section class="slide" data-page="04" aria-label="拟议借还流程">
+<p class="kicker">拟议借还流程</p><h1 class="heading">一次借用，要有清楚的<span class="blue">开始和结束。</span></h1>
+<p class="flow-sub">把适用、归还和问题处理讲在前面，减少居民与社区的来回沟通。</p>
+<div class="flow-wrap"><div class="flow-line"></div><div class="flow-grid">
+<div class="flow-step"><div class="num">01</div><h2>先选合适的</h2><p>说明使用场景，<br>确认工具是否适用。</p></div>
+<div class="flow-step"><div class="num">02</div><h2>登记再借走</h2><p>记录借用信息，<br>约定归还时间。</p></div>
+<div class="flow-step"><div class="num">03</div><h2>看懂再使用</h2><p>阅读操作说明；<br>需要时预约学习。</p></div>
+<div class="flow-step"><div class="num">04</div><h2>按约定归还</h2><p>归还工具，<br>反馈使用中的问题。</p></div>
+<div class="flow-step"><div class="num">05</div><h2>检查后再借</h2><p>近邻检查、清洁、<br>维护后再供借用。</p></div>
+</div></div>
+<div class="flow-base"><strong>启动前把规则说清楚</strong><p>借用条件、借还时段、逾期与损坏处理方式，由双方共同确认并向居民说明。</p></div>
+<p class="footer">以上为拟议流程；具体规则和费用尚未确定。</p><div class="page-number">04</div>
+</section>
+<section class="slide mist" data-page="05" aria-label="第一期试点安排与双方分工">
+<p class="kicker">第一期试点建议</p><h1 class="heading">先把分工说清，再试 <span class="blue">30 天。</span></h1>
+<div class="pilot-counts"><div class="metric"><b>1</b><span>个社区</span></div><div class="metric"><b>20</b><span>件工具</span></div><div class="metric"><b>30</b><span>天试点</span></div></div>
+<div class="roles"><div class="role"><h2>社区提供</h2><p>一处固定借还空间<br>居民触达渠道</p><p class="role-intro">让居民找得到</p></div><div class="role"><h2>近邻提供</h2><p>工具、登记流程与操作说明<br>工具检查、清洁与维护<br>问题反馈与跟进</p><p class="role-intro">让借还运转起来</p></div></div>
+<p class="prestart"><strong>启动前共同确认</strong>　借还时段、现场值守安排与处理规则。<br>收费方式待定；完成试点后，再决定品类、费用与扩展方式。</p>
+<p class="footer">试点尚属拟议方案，未签约社区；投入与责任范围以双方确认为准。</p><div class="page-number">05</div>
+</section>
+<section class="slide dark" data-page="06" aria-label="试点评估与下一步">
+<p class="kicker">把决定交给试点</p><h1 class="close-heading">用 <span class="blue">30 天，</span><br>决定下一步。</h1>
+<p class="close-desc">先验证居民用不用、借还顺不顺、<br>维护能不能持续。<br>有了记录，再讨论怎么扩大。</p>
+<div class="questions"><div class="question"><h2 class="qhead"><span class="qnum">01</span>是否有人持续借用？</h2><p>建议记录：借用次数与重复借用情况。</p></div><div class="question"><h2 class="qhead"><span class="qnum">02</span>借还是否顺畅？</h2><p>建议记录：办理耗时、逾期与问题反馈。</p></div><div class="question"><h2 class="qhead"><span class="qnum">03</span>维护成本是否可控？</h2><p>建议记录：检查维护工时与耗材费用。</p></div></div>
+<p class="next-step"><span>本次希望</span>共同确认一个试点意向，再细化空间、对接人、借还规则与记录方式。</p>
+<p class="footer">虚构练习提案 · 尚无公开运营数据；评估标准与是否扩展，由双方结合试点记录决定。</p><div class="page-number">06</div>
+</section>
+</main>
+<nav class="deck-nav" data-deck-ui aria-label="演示导航"><button id="previous" type="button">← 上一页</button><span class="counter"></span><button id="next" type="button">下一页 →</button></nav>
+<script>
+(()=>{
+ const slides=[...document.querySelectorAll('.viewport > .slide')];let current=0;
+ function fit(){const full=document.body.classList.contains('capture')||document.fullscreenElement;document.documentElement.style.setProperty('--scale',Math.min(innerWidth/1920,(innerHeight-(full?0:80))/1080));}
+ function show(index){current=Math.max(0,Math.min(slides.length-1,index));slides.forEach((s,i)=>s.classList.toggle('active',i===current));const counter=document.querySelector('.counter');if(counter)counter.textContent=String(current+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');}
+ document.querySelector('#previous').onclick=()=>show(current-1);document.querySelector('#next').onclick=()=>show(current+1);
+ addEventListener('resize',fit);addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();show(current+1);}if(e.key==='ArrowLeft')show(current-1);if(e.key==='Home')show(0);if(e.key==='End')show(slides.length-1);});
+ window.yuDeck={show,fit,get count(){return slides.length;}};show(0);fit();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+{
+  "project": "近邻工具图书馆",
+  "case_status": "完全虚构的公开练习案例",
+  "external_sources": [],
+  "sources": [
+    {
+      "id": "brief",
+      "path": "brief.md",
+      "type": "user_provided_fictional_brief",
+      "description": "唯一业务输入。访谈 12 人、其中 8 人提到占地方，试点拟定 1 社区、20 件工具、30 天。",
+      "applies_to_pages": [
+        "01",
+        "02",
+        "03",
+        "04",
+        "05",
+        "06"
+      ]
+    },
+    {
+      "id": "template",
+      "path": "../assets/template.html",
+      "type": "package_template",
+      "description": "复制页面结构、字体与颜色基础、翻页及打印支持；示例文案全部替换。",
+      "applies_to_pages": [
+        "01",
+        "02",
+        "03",
+        "04",
+        "05",
+        "06"
+      ]
+    }
+  ],
+  "visuals": [
+    {
+      "id": "drill-and-box",
+      "page": "01",
+      "type": "original_inline_svg",
+      "role": "语境",
+      "description": "电钻与工具收纳箱示意，不是设备实拍。"
+    },
+    {
+      "id": "respondents",
+      "page": "02",
+      "type": "original_html_css",
+      "role": "证据可视化",
+      "description": "12 个等尺寸人物符号，8 个蓝色；仅对应练习样本。"
+    },
+    {
+      "id": "tool-station",
+      "page": "03",
+      "type": "original_inline_svg",
+      "role": "语境",
+      "description": "固定工具借还站与拟议工具品类示意，不是已建成设施。"
+    },
+    {
+      "id": "borrowing-flow",
+      "page": "04",
+      "type": "original_html_css",
+      "role": "过程",
+      "description": "拟议五步借还流程；新增操作细节均为建议或待确认。"
+    }
+  ],
+  "editorial_inferences": [
+    {
+      "pages": [
+        "01",
+        "03"
+      ],
+      "type": "positioning",
+      "description": "用居民便利和借用放心组织主张，未断言试点效果。"
+    },
+    {
+      "pages": [
+        "04",
+        "05"
+      ],
+      "type": "proposed_operating_details",
+      "description": "借用条件、时段、逾期、损坏处理、值守安排为建议启动前共同确认项。"
+    },
+    {
+      "pages": [
+        "06"
+      ],
+      "type": "proposed_measurement",
+      "description": "借用次数、重复借用、办理耗时、逾期、问题反馈、工时、耗材费用为建议记录项，非既有数据或已批准评估标准。"
+    }
+  ],
+  "assets": "全部 HTML/CSS/SVG 内嵌；无外部图片、下载素材或个人路径依赖。"
+}
