@@ -1,4 +1,8 @@
-# marp-apple
+# marp-decks
+
+Marp 幻灯片工具链：主题、构建脚本与质检流程，产出 PDF 与单文件 HTML。
+
+仓库收工具链，技能收风格：首个主题是 `apple`，见 `skills/marp-apple/`。
 
 把「宇苹果」（[ttyineworld/yu-apple](https://github.com/ttyineworld/yu-apple)，MIT）里关于**判断、
 叙事、版式和质检**的部分搬到 Marp 上：不生成 HTML 页面，改成一份 Markdown 出 PDF、单文件 HTML
@@ -75,4 +79,20 @@ ln -s ~/opencodev1/szbl/new/skills/marp-apple ~/.config/opencode/skills/marp-app
 ## 许可与出处
 
 方法改编自廷宇的「宇苹果」（MIT）。本仓库中的文字与代码同样以 MIT 发布，
-再分发请保留出处与许可声明。项目名里的「apple」只表达审美取向，与 Apple Inc. 无关。
+再分发请保留出处与许可声明。技能名里的「apple」只表达审美取向，与 Apple Inc. 无关。
+
+### 来源与更新检查
+
+- 上游：<https://github.com/ttyineworld/yu-apple>
+- 参照版本：`v0.1.0`，commit `0706a61`（2026-11-12，「发布宇苹果 Yu Apple v0.1.0」）
+- 改编范围：只取了 `SKILL.md` 与 `references/` 里的方法（判断优先、页面原型、文案提炼、
+  工作流、质检清单），丢弃其手写 HTML 与 Playwright 截图/导出链路。
+- 隔一段时间回来看上游有没有更新：
+
+  ```bash
+  git -C tmp/yu-apple pull --ff-only
+  git -C tmp/yu-apple log --oneline 0706a61..HEAD
+  ```
+
+  `tmp/yu-apple` 不入库（见 `.gitignore`）；没有的话重新 `git clone --depth 1` 到那里，
+  然后用 `SKILL.md`、`references/*.md` 与本仓库同名文件逐节比对，判断哪些方法值得跟进。
