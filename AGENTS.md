@@ -64,6 +64,15 @@ DECK=proposal.md pixi run all
 - 第一页 `<!-- _class: lead -->` 同时表示「封面」与「章节页版式」；把 `lead` 用在中间页，
   那一页不会显示页码，这是有意为之。
 
+## 导出 HTML 的交互
+
+- `inline_images.py` 注入的点击放大不是装饰：空格既要能开关放大层，又不能唤出
+  Marp 的「Page N of M」浮动条。改动这段脚本后，用浏览器确认三件事：点图能放大、
+  空格能收起、收起后没浮动条。
+- 品牌类图片（`hdr-logo`、`cover-logo`、`div-logo`、`emoji`）不要加 `zoomable`。
+- 单文件是交付目标：`<img src>` 与 CSS `url()` 都要内联，远程 URL 不内联（投屏稿不要用）。
+  改完用 `grep -c 'src="assets' build/deck.html` 确认为 0。
+
 ## 上游快照与 remote
 
 - 上游：<https://github.com/ttyineworld/yu-apple>，参照 `v0.1.0` / `0706a61`。

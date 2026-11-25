@@ -10,7 +10,7 @@ skills/marp-apple/
   themes/apple.css           Marp 主题：参数都在这里改一次
   tools/build_pdf.py         PDF 导出（封面单渲、正文从 1 编号）
   tools/check_overflow.py    PDF 文字越界检查
-  tools/inline_images.py     HTML 单文件化与页码重排
+  tools/inline_images.py     HTML 单文件化、页码重排、点击放大
   tools/extract_notes.py     逐页讲稿抽取
 bin/marp-deck                在任意目录出稿的包装脚本
 build/                       构建产物（git 忽略）
@@ -110,6 +110,32 @@ Marp 的 `paginate: true` 按幻灯片序号编号，封面也算一页。两种
 
 主题把 `lead` 页的 `::after` 设为 `display: none`，所以封底也不出页码。
 不要用 `content: counter(...)` 覆盖 `section::after`——Marp 会剥离这条声明。
+
+## 导出 HTML 的交互
+
+`inline_images.py` 会往单文件 HTML 里注入点击放大（实测版本来自
+`Slides/01_OpenCode_Intro`）：
+
+- 点页面上的图片全屏显示，再点一次或按空格收起；
+- 放大状态下方向键滚动 64 px，PageUp/PageDown 滚一屏，Esc 收起；
+- 收拾放大层时会 `stopImmediatePropagation` 吃掉空格与 mousemove，并把
+  `.bespoke-marp-parent` 置回 `bespoke-marp-inactive`——不这样做，空格会唤出
+  Marp 右下角的「Page N of M」浮动条；
+- 只对 `section img` 生效，`hdr-logo`、`cover-logo`、`div-logo`、`emoji` 不放大；
+- 只影响导出的 HTML，PDF 里没有。
+
+## 单文件：把 HTML 当 PPTX 用
+
+目标是拷一个 `.html` 到投屏电脑，双击就能放。`inline_images.py` 内联两类本地资源：
+
+- `<img src="相对路径">`：页面图片、Marp `![bg]` 背景图（Marp 导出的背景也是 `<img>`）；
+- CSS 里的 `url("相对路径")`：主题或页内 style 的背景图、`@font-face` 引用的本地字体文件。
+
+不内联、仍然外链的：`http(s)://` 远程图、`data:` 本身、`<video>`/`<audio>`/PDF 等附件。
+需要连网的图不要放进投屏稿；视频要么改成本地文件并接受体积，要么单独拷。
+
+字体还有一层：系统字体（PingFang、Noto Sans CJK）不会被打进 HTML，投屏电脑没有同名字体就会
+换字、断行变化。要完全可控，用 `@font-face` 指向仓库里的字体文件，`url()` 会把它内联。
 
 ## 检查手段
 
