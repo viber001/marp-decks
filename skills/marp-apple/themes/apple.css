@@ -1,0 +1,196 @@
+/* @theme apple */
+/* marp-apple 主题：克制视觉 + 判断优先。参数见 references/deck-dna.md。 */
+
+:root {
+  --ink: #1d1d1f;
+  --ink-soft: #626268;
+  --muted: #86868b;
+  --paper: #ffffff;
+  --fog: #f5f5f7;
+  --night: #050506;
+  --accent: #0071e3;
+}
+
+section {
+  width: 1280px;
+  height: 720px;
+  padding: 52px 64px 56px;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "PingFang SC", "Noto Sans CJK SC", "Noto Sans SC",
+    "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+  font-size: 22px;
+  line-height: 1.55;
+  letter-spacing: 0.01em;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+h1, h2, h3 {
+  margin: 0 0 12px;
+  font-weight: 700;
+  line-height: 1.18;
+  letter-spacing: -0.01em;
+}
+
+h1 { font-size: 48px; }
+h2 { font-size: 40px; }
+h3 { font-size: 28px; color: var(--ink-soft); font-weight: 600; }
+
+p, ul, ol { margin: 0 0 12px; }
+li { margin: 6px 0; }
+li::marker { color: var(--muted); }
+
+strong { color: var(--accent); font-weight: 700; }
+a { color: var(--accent); text-decoration: none; }
+code {
+  font-family: "JetBrains Mono", "SF Mono", Menlo, monospace;
+  font-size: 0.88em;
+  background: var(--fog);
+  border-radius: 6px;
+  padding: 1px 6px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 18px;
+}
+th {
+  background: var(--fog);
+  font-weight: 700;
+  text-align: left;
+}
+th, td { padding: 8px 12px; border-bottom: 1px solid #e5e5ea; }
+
+blockquote {
+  margin: 12px 0 0;
+  padding: 8px 0 8px 16px;
+  border-left: 3px solid var(--accent);
+  color: var(--ink-soft);
+  font-size: 20px;
+}
+
+img { max-width: 100%; border-radius: 8px; }
+
+/* 页码：右下角，小、灰、不抢注意力 */
+section::after {
+  color: var(--muted);
+  font-size: 13px;
+  right: 28px;
+  bottom: 20px;
+  padding: 0;
+}
+
+section.lead {
+  justify-content: center;
+  padding: 0 96px;
+  background: var(--paper);
+}
+section.lead h1 { font-size: 72px; }
+section.lead p { color: var(--ink-soft); font-size: 24px; }
+section.lead::after { display: none; }
+
+section.dark { background: var(--night); color: var(--paper); }
+section.dark h1, section.dark h2, section.dark h3 { color: var(--paper); }
+section.dark p { color: #d2d2d7; }
+section.dark::after { color: #6e6e73; }
+
+section.statement {
+  justify-content: center;
+  padding: 0 96px;
+}
+section.statement h1 {
+  font-size: 64px;
+  line-height: 1.22;
+  max-width: 1040px;
+}
+section.statement p,
+section.statement .source { margin-top: 20px; color: var(--ink-soft); }
+
+section.figure { gap: 16px; }
+section.figure img {
+  display: block;
+  margin: 8px auto 0;
+  max-height: 430px;
+  width: auto;
+}
+
+section.dense { font-size: 19px; padding: 44px 56px 52px; }
+section.dense h2 { font-size: 32px; }
+section.dense table { font-size: 15px; }
+section.dense th, section.dense td { padding: 5px 9px; }
+section.dense li { margin: 3px 0; }
+section.dense pre { font-size: 14px; line-height: 1.4; }
+section.dense blockquote { font-size: 17px; margin-top: 10px; }
+
+.cols, .grid3, .compare {
+  display: grid;
+  gap: 28px;
+  align-items: start;
+}
+.cols, .compare { grid-template-columns: 1fr 1fr; }
+.grid3 { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.compare > div, .grid3 > div {
+  border-top: 2px solid var(--fog);
+  padding-top: 10px;
+}
+
+.takeaway {
+  margin-top: auto;
+  padding: 10px 0 0;
+  border-top: 2px solid var(--accent);
+  font-size: 21px;
+  color: var(--ink);
+}
+
+.source {
+  margin-top: auto;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.tag {
+  display: inline-block;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: var(--accent);
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  padding: 1px 8px;
+  vertical-align: 2px;
+}
+
+.steps { counter-reset: step; list-style: none; padding: 0; }
+.steps > li {
+  position: relative;
+  padding-left: 40px;
+  margin: 14px 0;
+}
+.steps > li::before {
+  counter-increment: step;
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--fog);
+  color: var(--ink-soft);
+  font-size: 13px;
+  line-height: 26px;
+  text-align: center;
+}
+.steps > li + li::after {
+  content: "";
+  position: absolute;
+  left: 13px;
+  top: -14px;
+  height: 14px;
+  border-left: 1px solid #d2d2d7;
+}
+
+section.dark .tag { color: #7ab7ff; }

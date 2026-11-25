@@ -1,0 +1,27 @@
+[workspace]
+authors = ["HU Xuesong <87519979+huxs001@users.noreply.github.com>"]
+channels = ['conda-forge', 'bioconda']
+name = "new"
+platforms = ['osx-arm64']
+version = "0.1.0"
+
+[dependencies]
+python = ">=3.11"
+marp-cli = ">=4.0"
+poppler = ">=24.0"
+pillow = ">=10.0"
+
+[tasks.pdf]
+cmd = "bash -c 'deck=${DECK:-deck.md}; mkdir -p build; python skills/marp-apple/tools/build_pdf.py \"$deck\" -o \"build/${deck%.md}.pdf\" --marp-arg=--theme-set --marp-arg=skills/marp-apple/themes/apple.css'"
+
+[tasks.html]
+cmd = "bash -c 'deck=${DECK:-deck.md}; mkdir -p build; marp --theme-set skills/marp-apple/themes/apple.css --html --allow-local-files \"$deck\" -o \"build/${deck%.md}.html\" && python skills/marp-apple/tools/inline_images.py \"build/${deck%.md}.html\" -o \"build/${deck%.md}.html\" --renumber=auto'"
+
+[tasks.notes]
+cmd = "bash -c 'deck=${DECK:-deck.md}; mkdir -p build; python skills/marp-apple/tools/extract_notes.py \"$deck\" -o \"build/${deck%.md}.notes.md\"'"
+
+[tasks.check]
+cmd = "bash -c 'deck=${DECK:-deck.md}; python skills/marp-apple/tools/check_overflow.py \"build/${deck%.md}.pdf\"'"
+
+[tasks.all]
+cmd = "bash -c 'deck=${DECK:-deck.md}; pixi run pdf && pixi run html && pixi run notes && pixi run check'"
