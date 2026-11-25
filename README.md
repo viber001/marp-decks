@@ -87,12 +87,25 @@ ln -s ~/opencodev1/szbl/new/skills/marp-apple ~/.config/opencode/skills/marp-app
 - 参照版本：`v0.1.0`，commit `0706a61`（2026-11-12，「发布宇苹果 Yu Apple v0.1.0」）
 - 改编范围：只取了 `SKILL.md` 与 `references/` 里的方法（判断优先、页面原型、文案提炼、
   工作流、质检清单），丢弃其手写 HTML 与 Playwright 截图/导出链路。
-- 隔一段时间回来看上游有没有更新：
+- 分支 `upstream/yu-apple` 挂两个 remote：
+  - `origin`（marp-decks）是**默认远端**，`git push` / `git pull` 都走它；
+  - `yu-apple`（ttyineworld/yu-apple）只用于检查更新，不往那里推。
+
+  本地分支已设为跟踪 `origin/upstream/yu-apple`，push 目标同样是它：
 
   ```bash
-  git -C tmp/yu-apple pull --ff-only
-  git -C tmp/yu-apple log --oneline 0706a61..HEAD
+  git fetch yu-apple
+  git log --oneline 0706a61..yu-apple/main
+  git diff 0706a61..yu-apple/main -- SKILL.md references
   ```
 
-  `tmp/yu-apple` 不入库（见 `.gitignore`）；没有的话重新 `git clone --depth 1` 到那里，
-  然后用 `SKILL.md`、`references/*.md` 与本仓库同名文件逐节比对，判断哪些方法值得跟进。
+  有更新时先读 diff，判断哪些方法值得跟进；决定跟进后把新快照推到同名分支：
+
+  ```bash
+  git push origin yu-apple/main:refs/heads/upstream/yu-apple
+  ```
+
+- 分支命名约定：第三方快照一律放在 `upstream/<仓库名>` 下（`upstream/yu-apple`、
+  将来可能是 `upstream/<别的>`），`main` 只放本仓库自己的内容。
+  检查更新用的 remote 不要叫 `upstream`，否则 `upstream/xxx` 会与远端跟踪分支混淆。
+- 上游快照只存在于分支里，工作区看不到，因此不会被 skills 扫描误当成第二个技能。
