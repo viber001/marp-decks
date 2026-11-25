@@ -43,6 +43,23 @@ metadata:
 7. **节奏服务于讲述。** 命题页给停顿，证据页给细节，章节页给转向；连续几页轮廓相同要问一句「内容真的同类吗」。
 8. **把反馈变成可迁移的判断。** 用户改了某句，先看它多了什么发现感或因果；不要把句子表面结构复制到所有页。
 
+## 页码与封面
+
+- Marp 按幻灯片序号编号，封面也算第 1 页。本套工具把「第一页」当作封面：**只有第一页写了
+  `<!-- _class: lead -->` 才偏移页码**，其它情况一律按原序号。
+- 有封面时：封面不显示页码，第 2 张显示 1，直到 N-1；`lead` 章节点与封底同样不显示
+  （主题里 `section.lead::after { display: none }`）。
+- 网页与 PDF 都要一致：
+  - PDF 走 `tools/build_pdf.py`——封面单独渲染（front matter 里 `paginate` 覆盖成 `false`），
+    正文单独渲染、自己从 1 编号，再 `pdfunite` 合并；
+  - 网页走 `tools/inline_images.py --renumber=auto`——把每页 `data-marpit-pagination`
+    减一并删掉封面那条属性。
+- 想强制：`--cover=on|off`（PDF）、`--renumber=on|off`（网页）。无封面却硬开 `on`，
+  第一页会丢编号，别这么干。
+- 为什么不能用 CSS：Marp 会剥掉 `section::after` 里的 `content: counter(...)`，
+  只留 `attr(data-marpit-pagination)`，起始值改不了；PDF 里的数字也已写进内容流，
+  导出后改不了，只能像上面那样在构建期拆开。
+
 ## 默认规格（Marp，1280×720）
 
 - 16:9，逻辑画布 1280×720；`size: 16:9`，页码 `paginate: true`。
