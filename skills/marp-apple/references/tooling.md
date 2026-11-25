@@ -8,9 +8,11 @@ skills/marp-apple/
   SKILL.md                   方法入口
   references/                判断与检查细则
   themes/apple.css           Marp 主题：参数都在这里改一次
+  tools/build_pdf.py         PDF 导出（封面单渲、正文从 1 编号）
   tools/check_overflow.py    PDF 文字越界检查
-  tools/inline_images.py     HTML 单文件化
+  tools/inline_images.py     HTML 单文件化与页码重排
   tools/extract_notes.py     逐页讲稿抽取
+bin/marp-deck                在任意目录出稿的包装脚本
 build/                       构建产物（git 忽略）
 ```
 
@@ -29,6 +31,27 @@ pixi run all          # 依次跑上面四步
 ```
 DECK=proposal.md pixi run all
 ```
+
+## 在别的工作目录里出稿
+
+稿子通常不在本仓库里。不要为了出稿在项目里再跑一次 `pixi install`：`bin/marp-deck`
+用 `pixi run --manifest-path` 复用本仓库的环境，工作目录里不会生成 `.pixi`。
+
+```
+~/git/skills/marp-decks/bin/marp-deck all 汇报/deck.md
+~/git/skills/marp-decks/bin/marp-deck html 汇报/deck.md
+```
+
+- 支持的子命令与 `pixi run` 一致：`pdf`、`html`、`notes`、`check`、`all`。
+- 产物落在稿子旁边：`deck.pdf`、`deck.html`、`deck.notes.md`；图片路径按稿子所在目录解析。
+- 项目里的 `.gitignore` 只写两行，让源稿之外的东西不进库：
+
+```
+*.pdf
+*.html
+```
+
+也就是：仓库只放 Markdown（必要时加 `deck.notes.md`），图片放 `assets/` 一并入库。
 
 ## 手写命令
 

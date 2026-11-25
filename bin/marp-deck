@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+# 在工作目录里用本仓库的 pixi 环境构建 deck，不在工作目录生成 .pixi。
+#
+# 用法:
+#   marp-deck <pdf|html|notes|check|all> [deck.md]
+#   marp-deck all 汇报/deck.md
+#
+# 产物落在稿子旁边：deck.pdf、deck.html、deck.notes.md。
+set -euo pipefail
+
+ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
+THEME="$ROOT/skills/marp-apple/themes/apple.css"
+TOOLS="$ROOT/skills/marp-apple/tools"
+
+cmd=${1:-all}
+shift || true
+deck=${1:-deck.md}
+if [[ ! -f $deck ]]; then
+  echo "找不到 $deck" >&2
+  exit 1
+fi
+deck=$(cd "$(dirname "$deck")" && pwd)/$(basename "$deck")
+dir=$(dirname "$deck")
+stem=${deck%.md}
+
+pixi_run() { pixi run --manifest-path "$ROOT/pixi.toml" "$@"; }
+
+do_pdf() {
+  ( cd "$dir" && pixi_run python "$TOOLS/build_pdf.py" "$deck" -o "$stem.pdf" \
+      --marp-arg=--theme-set --marp-arg="$THEME" )
+}
+
+do_html() {
+  ( cd "$dir" && pixi_run marp --theme-set "$THEME" --html --allow-local-files \
+      "$deck" -o "$stem.html" && \
+    pixi_run python "$TOOLS/inline_images.py" "$stem.html" -o "$stem.html" \
+      --renumber=auto )
+}
+
+do_notes() {
+  ( cd "$dir" && pixi_run python "$TOOLS/extract_notes.py" "$deck" -o "$stem.notes.md" )
+}
+
+do_check() {
+  ( cd "$dir" && pixi_run python "$TOOLS/check_overflow.py" "$stem.pdf" )
+}
+
+case $cmd in
+  pdf) do_pdf ;;
+  html) do_html ;;
+  notes) do_notes ;;
+  check) do_check ;;
+  all) do_pdf; do_html; do_notes; do_check ;;
+  *) echo "用法: marp-deck <pdf|html|notes|check|all> [deck.md]" >&2; exit 2 ;;
+esac

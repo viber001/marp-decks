@@ -2,33 +2,10 @@
 
 Marp 幻灯片工具链：主题、构建脚本与质检流程，产出 PDF 与单文件 HTML。
 
-仓库收工具链，技能收风格：首个主题是 `apple`，见 `skills/marp-apple/`。
-
-把「宇苹果」（[ttyineworld/yu-apple](https://github.com/ttyineworld/yu-apple)，MIT）里关于**判断、
-叙事、版式和质检**的部分搬到 Marp 上：不生成 HTML 页面，改成一份 Markdown 出 PDF、单文件 HTML
-和逐页讲稿。
-
-- 原技能的成品是手写 HTML + Playwright 截图/导出；这里丢掉这一层，保留它的方法。
-- 视觉参数（字号、边距、颜色、类名）落到 `skills/marp-apple/themes/apple.css`，改一次全套生效。
-- 讲稿写在页内注释里，`pixi run notes` 抽成逐页文案，页面文字与口播不互相复述。
-
-## 目录
-
-```
-deck.md                        示例稿（也可当模板）
-skills/marp-apple/
-  SKILL.md                     方法入口：什么时候做什么
-  references/
-    deck-dna.md                视觉锚点与版式类名
-    voice-and-copy.md          提炼、口径、反馈处理
-    page-archetypes.md         内容 → 轮廓
-    full-deck-workflow.md      页序、样页、导出
-    qa-checklist.md            交付前逐条检查
-    tooling.md                 构建命令与落盘规则
-  themes/apple.css             Marp 主题
-  tools/                       check_overflow / inline_images / extract_notes
-pixi.toml                      marp-cli + poppler + python 与四个任务
-```
+仓库收工具链，技能收风格：首个主题是 `apple`，见 `skills/marp-apple/`。方法改编自廷宇的
+「宇苹果」（[ttyineworld/yu-apple](https://github.com/ttyineworld/yu-apple)，MIT）——保留它关于
+判断、叙事、版式与质检的部分，把成品这一层换成 Marp：**一份 Markdown 出 PDF、单文件 HTML
+和逐页讲稿**。
 
 ## 安装
 
@@ -38,74 +15,52 @@ pixi install
 
 `marp-cli`、`poppler`（`pdftotext`、`pdfinfo`）来自 conda-forge，`python` 用于三个小工具。
 
-## 使用
+## 快速开始
 
 ```
-pixi run pdf      # build/deck.pdf（封面单渲，正文页码从 1 起）
-pixi run html     # build/deck.html（图片已内联，页码从 1 起）
-pixi run notes    # build/deck.notes.md
-pixi run check    # 越界检查
-pixi run all
+pixi run all              # deck.md → build/deck.pdf、deck.html、deck.notes.md
 DECK=proposal.md pixi run all
 ```
 
-在 OpenCode 里当技能用，把目录链接到技能目录：
+在别的工作目录里出稿，用 `bin/marp-deck`（复用本仓库的 pixi 环境，不在那里生成 `.pixi`）：
 
 ```
-ln -s ~/opencodev1/szbl/new/skills/marp-apple ~/.config/opencode/skills/marp-apple
+~/git/skills/marp-decks/bin/marp-deck all 汇报/deck.md
 ```
 
-之后说「用 marp-apple 把这份材料做成 12 页述职」即可。其它支持 `SKILL.md` 的工具
-按各自的技能目录配置。
+## 目录
 
-## 写法要点
+```
+deck.md                        示例稿（也可当模板）
+skills/marp-apple/SKILL.md     方法入口：什么时候做什么
+skills/marp-apple/references/  判据、原型、工作流、质检、构建细则
+skills/marp-apple/themes/      apple.css（参数都在这里改一次）
+skills/marp-apple/tools/       check_overflow / build_pdf / inline_images / extract_notes
+bin/marp-deck                  在任意目录出稿的包装脚本
+```
 
-- 一页一个判断；标题 1—2 行，语义处断行。
-- 页面分隔只用 `---`；漏一个就会两页合一。
-- 排版靠类名：`lead`（封面/章节）、`statement`（命题）、`dark`（暗页）、`figure`（图文）、
-  `dense`（表格/代码）、`.cols` / `.grid3` / `.compare` / `.steps` / `.takeaway` / `.source` / `.tag`。
-- 讲稿：`<!-- 25s｜…… -->`，只写口播，不重复页面文字。
-- 图片放 `assets/`，相对路径引用；`pixi run html` 会内联成单文件。
-- 页码：第一页写成 `<!-- _class: lead -->` 就当封面处理，封面不编号、正文从 1 起，
-  网页与 PDF 一致；没有封面则按幻灯片序号 1—N。需要强制时用 `--cover=on|off`、
-  `--renumber=on|off`。
+## 作为技能接入
+
+```
+ln -s ~/git/skills/marp-decks/skills/marp-apple ~/.config/opencode/skills/marp-apple
+```
+
+之后说「用 marp-apple 把这份材料做成 12 页述职」即可。其它支持 `SKILL.md` 的工具按各自的
+技能目录配置。
+
+## 文档分工
+
+- `README.md`（本文件）：给人看的入口——它是什么、怎么装、怎么跑。
+- `AGENTS.md`：给 agent 和贡献者的仓库约定——构建、验证、文档边界、上游快照与提交规则。
+- `skills/marp-apple/SKILL.md` + `references/`：写稿方法本身，跟着技能一起分发。
 
 ## 范围与限制
 
 - 不产出 PPTX；需要可编辑幻灯片请另走路线。
 - 字体不随仓库分发；换机器后要重新检查断行与溢出。
-- 主题参数是按中文汇报场景调的，换品牌模板时改 `apple.css` 的变量与字号即可。
+- 主题参数按中文汇报场景调过，换品牌模板时改 `apple.css` 的变量与字号。
 
-## 许可与出处
+## 许可
 
-方法改编自廷宇的「宇苹果」（MIT）。本仓库中的文字与代码同样以 MIT 发布，
+MIT，双版权：本仓库 © 2026 胡雪松，方法与文字改编自 © 2026 廷宇（yu-apple）。
 再分发请保留出处与许可声明。技能名里的「apple」只表达审美取向，与 Apple Inc. 无关。
-
-### 来源与更新检查
-
-- 上游：<https://github.com/ttyineworld/yu-apple>
-- 参照版本：`v0.1.0`，commit `0706a61`（2026-11-12，「发布宇苹果 Yu Apple v0.1.0」）
-- 改编范围：只取了 `SKILL.md` 与 `references/` 里的方法（判断优先、页面原型、文案提炼、
-  工作流、质检清单），丢弃其手写 HTML 与 Playwright 截图/导出链路。
-- 分支 `upstream/yu-apple` 挂两个 remote：
-  - `origin`（marp-decks）是**默认远端**，`git push` / `git pull` 都走它；
-  - `yu-apple`（ttyineworld/yu-apple）只用于检查更新，不往那里推。
-
-  本地分支已设为跟踪 `origin/upstream/yu-apple`，push 目标同样是它：
-
-  ```bash
-  git fetch yu-apple
-  git log --oneline 0706a61..yu-apple/main
-  git diff 0706a61..yu-apple/main -- SKILL.md references
-  ```
-
-  有更新时先读 diff，判断哪些方法值得跟进；决定跟进后把新快照推到同名分支：
-
-  ```bash
-  git push origin yu-apple/main:refs/heads/upstream/yu-apple
-  ```
-
-- 分支命名约定：第三方快照一律放在 `upstream/<仓库名>` 下（`upstream/yu-apple`、
-  将来可能是 `upstream/<别的>`），`main` 只放本仓库自己的内容。
-  检查更新用的 remote 不要叫 `upstream`，否则 `upstream/xxx` 会与远端跟踪分支混淆。
-- 上游快照只存在于分支里，工作区看不到，因此不会被 skills 扫描误当成第二个技能。
