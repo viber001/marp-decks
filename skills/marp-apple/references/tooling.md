@@ -38,8 +38,8 @@ DECK=proposal.md pixi run all
 用 `pixi run --manifest-path` 复用本仓库的环境，工作目录里不会生成 `.pixi`。
 
 ```
-~/git/skills/marp-decks/bin/marp-deck all 汇报/deck.md
-~/git/skills/marp-decks/bin/marp-deck html 汇报/deck.md
+path/to/marp-decks/bin/marp-deck all 汇报/deck.md
+path/to/marp-decks/bin/marp-deck html 汇报/deck.md
 ```
 
 - 支持的子命令与 `pixi run` 一致：`pdf`、`html`、`notes`、`check`、`all`。
@@ -153,3 +153,19 @@ Marp 的 `paginate: true` 按幻灯片序号编号，封面也算一页。两种
 
 构建中间产物留在 `build/`，不进同步盘、不进仓库；
 最终只把 `*.slides.md`、`*.pdf`、`*.html`（按需）和讲稿文档放到交付目录。
+
+## 用外部主题
+
+主题可以放在别的仓库（例如机构 VI 仓库），不必搬进本仓库：
+
+```bash
+THEME=path/to/vi/themes/org.css path/to/marp-decks/bin/marp-deck all 汇报/deck.md
+```
+
+`THEME=` 交给 `bin/marp-deck`，它先调 `tools/prepare_theme.py` 把主题里的相对 `url()`
+改写成绝对路径（VI 仓库里按人可读的方式写相对路径），再交给 Marp；HTML 阶段由
+`inline_images.py` 内联成 data URI。所以：
+
+- VI 仓库不需要为构建做特殊处理，也不需要绝对路径或 base64；
+- 主题里的图片路径相对**主题文件**解析，与 deck 放在哪里无关；
+- 直接用 marp 而不是 `bin/marp-deck` 时，需要自己先跑 `prepare_theme.py`，否则跨目录取不到图。

@@ -40,7 +40,7 @@ DECK=proposal.md pixi run all
 在别的工作目录出稿：
 
 ```
-~/git/skills/marp-decks/bin/marp-deck all 汇报/deck.md
+path/to/marp-decks/bin/marp-deck all 汇报/deck.md
 ```
 
 `bin/marp-deck` 用 `pixi run --manifest-path` 复用本仓库环境，工作目录里不生成 `.pixi`；

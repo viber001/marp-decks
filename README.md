@@ -25,7 +25,10 @@ DECK=proposal.md pixi run all
 在别的工作目录里出稿，用 `bin/marp-deck`（复用本仓库的 pixi 环境，不在那里生成 `.pixi`）：
 
 ```
-~/git/skills/marp-decks/bin/marp-deck all 汇报/deck.md
+path/to/marp-decks/bin/marp-deck all 汇报/deck.md
+
+# 主题也可以放在别的仓库里；相对路径由构建器临时改写成本机绝对路径
+THEME=path/to/vi/themes/org.css path/to/marp-decks/bin/marp-deck all 汇报/deck.md
 ```
 
 ## 目录
@@ -42,7 +45,7 @@ bin/marp-deck                  在任意目录出稿的包装脚本
 ## 作为技能接入
 
 ```
-ln -s ~/git/skills/marp-decks/skills/marp-apple ~/.config/opencode/skills/marp-apple
+ln -s path/to/marp-decks/skills/marp-apple ~/.config/opencode/skills/marp-apple
 ```
 
 之后说「用 marp-apple 把这份材料做成 12 页述职」即可。其它支持 `SKILL.md` 的工具按各自的

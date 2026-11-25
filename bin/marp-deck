@@ -9,7 +9,7 @@
 set -euo pipefail
 
 ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
-THEME="$ROOT/skills/marp-apple/themes/apple.css"
+THEME=${THEME:-"$ROOT/skills/marp-apple/themes/apple.css"}
 TOOLS="$ROOT/skills/marp-apple/tools"
 
 cmd=${1:-all}
@@ -25,16 +25,29 @@ stem=${deck%.md}
 
 pixi_run() { pixi run --manifest-path "$ROOT/pixi.toml" "$@"; }
 
+# 主题可来自别处（如机构 VI 仓库）。复制一份并把相对 url() 换成绝对路径，
+# 否则 Marp 把主题内联进 deck 的 HTML 后，浏览器按 deck 目录解析不到图片。
+prep_theme() {
+  local out
+  out=$(mktemp -t marp-theme).css
+  pixi_run python "$TOOLS/prepare_theme.py" "$THEME" "$out" >/dev/null
+  echo "$out"
+}
+
 do_pdf() {
+  local theme; theme=$(prep_theme)
   ( cd "$dir" && pixi_run python "$TOOLS/build_pdf.py" "$deck" -o "$stem.pdf" \
-      --marp-arg=--theme-set --marp-arg="$THEME" )
+      --marp-arg=--theme-set --marp-arg="$theme" )
+  rm -f "$theme"
 }
 
 do_html() {
-  ( cd "$dir" && pixi_run marp --theme-set "$THEME" --html --allow-local-files \
+  local theme; theme=$(prep_theme)
+  ( cd "$dir" && pixi_run marp --theme-set "$theme" --html --allow-local-files \
       "$deck" -o "$stem.html" && \
     pixi_run python "$TOOLS/inline_images.py" "$stem.html" -o "$stem.html" \
       --renumber=auto )
+  rm -f "$theme"
 }
 
 do_notes() {
